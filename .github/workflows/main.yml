@@ -14,20 +14,20 @@ jobs:
       - name: Login to docker hub 
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build docker image
-        run: docker build -t vaniadimulam/NodeJsApp .
+        run: docker build -t vaniadimulam/nodejsapp .
       - name: Publish image to docker hub 
-        run: docker push vaniadimulam/NodeJsApp:latest
+        run: docker push vaniadimulam/nodejsapp:latest
 
   deploy: 
     needs: build
     runs-on: [aws-ec2]
     steps:
       - name: Pull image from docker 
-        run: docker pull vaniadimulam/NodeJsApp:latest
+        run: docker pull vaniadimulam/nodejsapp:latest
       - name: Delete old container 
-        run: docker rm -f NodeJsApp-container 
+        run: docker rm -f nodejsapp-container 
       - name: Run docker container 
-        run: docker run -p 7001:7001 -p 3000:3000 vaniadimulam/NodeJsApp:latest
+        run: docker run -p 7001:7001 -p 3000:3000 vaniadimulam/nodejsapp:latest
 
 
 
